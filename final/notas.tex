@@ -795,10 +795,9 @@ dropWhile p = recr [] (\x xs rec -> if p x then rec else x:xs)
 foldr f z = recr z (\x xs rec -> f x rec)
 
 -- recr en términos de foldr?
-recr z f = first $
-    foldr
-        (\x (rs1, rs2) -> (f x rs2 rs1, x:rs2))
-        (z, [])
+recr z f (x:xs) = fst $ 
+    foldr 
+        (\x (rs1, rs2) -> (f x rs2 rs1, x:rs2)) (z, []) (x:xs)
 
 recr z f = foldr f (z, [])
     where f = (\x, (rec, xs) -> f x xs rec)
