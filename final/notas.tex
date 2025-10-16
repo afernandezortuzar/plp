@@ -759,8 +759,8 @@ dropWhile' :: (a -> Bool) -> [a] -> ([a], [a])
 dropWhile' p = foldr f ([], [])
     where f = (\x (rs, os) -> (if p x then rs else x: os, x: os))
 
-dw p = first $ (foldr (\x (r1, r2)
-    -> (if p x then r1 else x: r2, x: r2 ) ) ([], []))
+dw p (x:xs) = fst $ (foldr (\x (r1, r2) 
+    -> (if p x then r1 else x: r2, x: r2 ) ) ([], []) (x:xs))
 
 -- Nota: Una forma más fácil de pensar esto es primero hacer dropWhile' a mano,
 -- con recursión explícita (sin ningún esquema) y luego mecánicamente pasarlo a fold
